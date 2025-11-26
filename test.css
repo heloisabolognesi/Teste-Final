@@ -32,3 +32,46 @@
 
 
 
+
+/* Container centralizado (caso precise) */
+.botao-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Estilo geral dos botões */
+button {
+    width: 100%;            /* Responsivo */
+    max-width: 600px;      /* Limite no desktop */
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #ffffff; /* Branco */
+    color: #000;           /* Texto preto */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Hover */
+button:hover {
+    background-color: #f7f7f7; /* Leve cinza no hover */
+}
+
+/* Active */
+button:active {
+    background-color: #ececec;
+}
+
+/* Estilos específicos */
+.btn-primario {
+    border-color: #cfcfcf;
+}
+
+.btn-secundario {
+    border-color: #d9d9d9;
+}
