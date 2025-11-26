@@ -6,19 +6,7 @@
     <meta name="description" content="Faça seu cadastro no Programa Viaja + e comece a viajar com descontos">
     <title>Cadastro - Programa Viaja +</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Gradiente preto sobre a imagem de capa */
-        .hero-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.6) 100%);
-            z-index: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="test.css">
 </head>
 <body>
     <!-- Cabeçalho -->
@@ -29,19 +17,10 @@
                     <img src="./img/logo.png" alt="Viaja +" class="logo-programa">
                 </div>
             </div>
-
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <div class="menu-overlay" onclick="toggleMenu()"></div>
             
             <nav class="nav-principal">
                 <ul>
                     <li><a href="index.html">Início</a></li>
-                    <li><a href="sobrenos.html">Nossa Equipe</a></li>
                     <li><a href="viagens.html">Destinos</a></li>
                     <li><a href="como-participar.html">Como Participar</a></li>
                     <li><a href="cadastro.html" class="ativo">Cadastro</a></li>
@@ -50,15 +29,6 @@
             </nav>
         </div>
     </header>
-
-    <script>
-        function toggleMenu() {
-            document.querySelector('.menu-toggle').classList.toggle('active');
-            document.querySelector('.nav-principal').classList.toggle('active');
-            document.querySelector('.menu-overlay').classList.toggle('active');
-            document.body.style.overflow = document.querySelector('.nav-principal').classList.contains('active') ? 'hidden' : '';
-        }
-    </script>
 
     <!-- Conteúdo principal -->
     <main>
@@ -375,6 +345,43 @@
                                 required
                             >
                         </div>
+
+
+                    <div id="container" class="formulario">
+
+    <div class="form-grupo">
+        <label class="form-label">Preço da Passagem</label>
+        <input type="text" id="preco-passagem" class="form-input" placeholder="Ex: 500">
+    </div>
+
+    <div class="form-grupo">
+        <label class="form-label">Preço do Hotel</label>
+        <input type="text" id="preco-hotel" class="form-input" placeholder="Ex: 300">
+    </div>
+
+    <div class="form-grupo">
+        <label class="form-label">Preço da Alimentação</label>
+        <input type="text" id="preco-alimentacao" class="form-input" placeholder="Ex: 200">
+    </div>
+
+    <button type="button" id="calcular-total" class="btn-primario">Calcular Total</button>
+
+    <hr class="form-divisor">
+
+    <button type="button" id="botao" class="btn-secundario">Calcular Desconto</button>
+
+</div>
+
+
+<div class="side-mini" id="sideBar">
+    <h3>Resumo</h3>
+    <p id="total-sidebar">Total da viagem: R$ 0,00</p>
+    <hr>
+    <p id="resultado-desconto"></p>
+    <p id="preco-final"></p>
+</div>
+
+
                     </fieldset>
                     
                     <!-- Dependentes -->
@@ -536,10 +543,16 @@
                     </div>
                     
                     <!-- Botões de ação -->
-                    <div class="btn-grupo mt-3">
-                        <button id="botao" type="submit" class="btn btn-desabilitado" disabled>
-                            Enviar Cadastro (Desabilitado - Mockup)
-                        </button>
+                    <button id="button" type="button" class="btn">
+    Enviar Cadastro
+</button>
+
+<script>
+document.getElementById("button").addEventListener("click", function () {
+    window.location.href = "notafiscal.html";
+});
+</script>
+
                         <button type="reset" class="btn btn-secundario">
                             Limpar Formulário
                         </button>
@@ -591,5 +604,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="desconto.js"></script>
+
 </body>
 </html>

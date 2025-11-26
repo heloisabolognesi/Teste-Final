@@ -1,9 +1,9 @@
 .side-mini {
     position: fixed;
     right: 15px;
-    top: 15px;
+    top: 100px;
     width: 180px;
-    background: #222;
+    background: white;
     color: white;
     padding: 15px;
     border-radius: 12px;
@@ -15,7 +15,7 @@
 .side-mini h3 {
     margin: 0 0 10px;
     font-size: 18px;
-    color: #ff9800;
+    color: #030303;
 }
 
 .side-mini p {
@@ -28,3 +28,7 @@
     border-top: 1px solid #444;
     margin: 10px 0;
 }
+
+
+
+

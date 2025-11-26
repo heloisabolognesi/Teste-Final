@@ -122,47 +122,42 @@
                             </p>
                         </div>
                         
-                        <!-- Botão de calcular (visual) -->
+                        <!-- Botão de calcular -->
                         <div class="texto-centralizado mt-2">
-                            <button type="button" class="btn btn-desabilitado" disabled>
-                                Calcular Desconto (Desabilitado - Mockup)
+                            <button type="button" class="btn btn-primario" onclick="calcularDesconto()">
+                                Calcular Desconto
                             </button>
                         </div>
                     </form>
                     
+                    <!-- Resultado do cálculo -->
+                    <div id="resultado-calculo" class="resultado-box mt-3" style="display: none;">
+                        <h3>Resultado do Cálculo</h3>
+                        <p><strong>Renda Familiar:</strong> <span id="resultado-renda"></span></p>
+                        <p><strong>Número de Pessoas:</strong> <span id="resultado-pessoas"></span></p>
+                        <p><strong>Renda Per Capita:</strong> <span id="resultado-percapita"></span></p>
+                        <p><strong>Faixa:</strong> <span id="resultado-faixa"></span></p>
+                        <div class="resultado-valor" id="resultado-desconto"></div>
+                        <p id="resultado-mensagem" style="margin-bottom: 0;"></p>
+                    </div>
+
                     <!-- Instruções de uso -->
                     <div class="mt-3" style="background-color: var(--cor-cinza-claro); padding: var(--espacamento-md); border-radius: 8px;">
-                        <h3>Como Usar Esta Calculadora (Simulação)</h3>
+                        <h3>Como Funciona</h3>
                         <p style="margin-bottom: var(--espacamento-sm);">
-                            Como este é um mockup visual sem JavaScript, siga estas instruções para 
-                            calcular manualmente seu desconto:
+                            A calculadora determina seu desconto automaticamente com base na renda per capita:
                         </p>
                         <ol style="margin-left: 1.5rem;">
                             <li style="margin-bottom: 0.5rem;">
-                                <strong>Calcule a renda per capita:</strong> Divida a renda familiar total 
-                                pelo número de pessoas
+                                <strong>Informe a renda familiar total:</strong> Some todos os rendimentos da família
                             </li>
                             <li style="margin-bottom: 0.5rem;">
-                                <strong>Identifique sua faixa:</strong> Veja na tabela abaixo em qual 
-                                faixa seu resultado se encaixa
+                                <strong>Informe o número de pessoas:</strong> Quantas pessoas moram na residência
                             </li>
                             <li style="margin-bottom: 0.5rem;">
-                                <strong>Veja seu desconto:</strong> O percentual indicado na faixa é o 
-                                seu desconto estimado
+                                <strong>Clique em calcular:</strong> O sistema calculará automaticamente seu desconto
                             </li>
                         </ol>
-                    </div>
-                    
-                    <!-- Exemplo prático -->
-                    <div class="resultado-box mt-2">
-                        <h3>Exemplo de Cálculo</h3>
-                        <p><strong>Situação:</strong> Família com renda total de R$ 3.000,00 e 4 pessoas</p>
-                        <p><strong>Cálculo:</strong> R$ 3.000,00 ÷ 4 pessoas = R$ 750,00 per capita</p>
-                        <p><strong>Faixa:</strong> Faixa 2 (entre R$ 661 e R$ 1.320)</p>
-                        <div class="resultado-valor">Desconto: 65%</div>
-                        <p style="margin-bottom: 0;">
-                            Esta família teria direito a 65% de desconto em passagens, hospedagem e alimentação
-                        </p>
                     </div>
                 </div>
             </div>
@@ -344,5 +339,71 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function calcularDesconto() {
+            const rendaTotal = parseFloat(document.getElementById('renda-total').value);
+            const numPessoas = parseInt(document.getElementById('num-pessoas').value);
+            
+            // Validação
+            if (isNaN(rendaTotal) || rendaTotal <= 0) {
+                alert('Por favor, informe a renda familiar total.');
+                return;
+            }
+            
+            if (isNaN(numPessoas) || numPessoas <= 0) {
+                alert('Por favor, informe o número de pessoas na família.');
+                return;
+            }
+            
+            // Cálculo da renda per capita
+            const rendaPerCapita = rendaTotal / numPessoas;
+            
+            // Determinar faixa e desconto
+            let faixa, desconto, mensagem;
+            
+            if (rendaPerCapita <= 660) {
+                faixa = 'Faixa 1 (até R$ 660,00)';
+                desconto = 80;
+                mensagem = 'Parabéns! Você tem direito ao desconto máximo de 80% em passagens, hospedagem e alimentação.';
+            } else if (rendaPerCapita <= 1500) {
+                faixa = 'Faixa 2 (R$ 660,00 a R$ 1.500,00)';
+                desconto = 65;
+                mensagem = 'Você tem direito a 65% de desconto em passagens, hospedagem e alimentação.';
+            } else if (rendaPerCapita <= 2000) {
+                faixa = 'Faixa 3 (R$ 1.500,00 a R$ 2.000,00)';
+                desconto = 50;
+                mensagem = 'Você tem direito a 50% de desconto em passagens, hospedagem e alimentação.';
+            } else if (rendaPerCapita <= 3000) {
+                faixa = 'Faixa 4 (R$ 2.000,00 a R$ 3.000,00)';
+                desconto = 35;
+                mensagem = 'Você tem direito a 35% de desconto em passagens, hospedagem e alimentação.';
+            } else {
+                faixa = 'Acima da Faixa 4';
+                desconto = 0;
+                mensagem = 'Sua renda per capita está acima das faixas de desconto do programa. Consulte outras opções de benefícios.';
+            }
+            
+            // Formatar valores para exibição
+            const formatarMoeda = (valor) => {
+                return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            };
+            
+            // Exibir resultados
+            document.getElementById('resultado-renda').textContent = formatarMoeda(rendaTotal);
+            document.getElementById('resultado-pessoas').textContent = numPessoas + (numPessoas === 1 ? ' pessoa' : ' pessoas');
+            document.getElementById('resultado-percapita').textContent = formatarMoeda(rendaPerCapita);
+            document.getElementById('resultado-faixa').textContent = faixa;
+            document.getElementById('resultado-desconto').textContent = 'Desconto: ' + desconto + '%';
+            document.getElementById('resultado-mensagem').textContent = mensagem;
+            
+            // Mostrar resultado
+            const resultadoDiv = document.getElementById('resultado-calculo');
+            resultadoDiv.style.display = 'block';
+            
+            // Rolar para o resultado
+            resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
 </body>
 </html>

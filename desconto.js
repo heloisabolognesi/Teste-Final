@@ -1,44 +1,80 @@
-const inputRenda = document.getElementById('renda-familiar')
-const inputPessoas = dosument.getElementById('numero-dependentes')
-const filtro = document.getElementById('botao')
-const sideBar = document.getElementById('sideBar')
+let total = 0
 
-filtro.addEventListener('click', function(){
-    const renda = inputRenda.value.split(',').map  (i=> Number(i.trim()))
-    const numeroPessoas = inputPessoas.value.split(',').map  (i=> Number(i.trim()))
-    const perCapita = renda / numeroPessoas
-    
-    switch (perCapita){
-    case perCapita < 660:
-    const desconto1 = precodaviagem * 0.15 //85%
-    sideBar.textContent = 'Você tem 85% de desconto'
-    break;
-    case perCapita > 660 && perCapita < 1500:
-    const desconto2 = precodaviagem * 0.25 //75%
-    sideBar.textContent = 'Você tem 75% de desconto'
-    break;
-    case perCapita > 1500 && perCapita < 2000:
-    const desconto3 = precodaviagem * 0.35 //65%
-    sideBar.textContent = 'Você tem 65% de desconto'
-    break;
-    case perCapita > 2000 && perCapita < 3000:
-    const desconto4 = precodaviagem * 0.75 //25%
-    sideBar.textContent = 'Você tem 75% de desconto'
-    break;
-    default:
-    sideBar.textContent = 'Você não tem direito a desconto'
-    break;
-    }
 
-    
-    
+const inputPassagem = document.getElementById('preco-passagem')
+const inputHotel = document.getElementById('preco-hotel')
+const inputAlimentacao = document.getElementById('preco-alimentacao')
+const calcular = document.getElementById('calcular-total')
+
+
+calcular.addEventListener('click', function(){
+    const passagem = inputPassagem.value.split(',').map(i => Number(i.trim()))[0]     // pega o primeiro número
+    const hotel = inputHotel.value.split(',').map(i => Number(i.trim()))[0]     // pega o primeiro número
+    const alimentacao = inputAlimentacao.value.split(',').map(i => Number(i.trim()))[0]     // pega o primeiro número
+
+    total = passagem + hotel + alimentacao
+
+    document.getElementById('total-sidebar').textContent =`Total da viagem: R$ ${total.toFixed(2)}`
+
 })
 
-//Passagem/Hospedagem
-const passagemTeste = document.getElementById('passagemTeste');
-const hospedagemTeste = document.getElementById('hospedagemTeste');
-const aplicaDesconto = document.getElementById('botao');
 
-aplicaDesconto.addEventListener('click', function(){
+
+
+
+
+
+
+
+
+
+
+
+const inputRenda = document.getElementById('renda-familiar')
+const inputPessoas = document.getElementById('numero-dependentes')
+const filtro = document.getElementById('botao')
+const sideBar = document.getElementById('sideBar')
+const resultado = document.getElementById('resultado-desconto')
+const precoFinal = document.getElementById('preco-final')
+
+
+
+
+filtro.addEventListener('click', function(){
+
+    //  split e map
+    const renda = inputRenda.value.split(',').map(i => Number(i.trim()))[0]     // pega o primeiro número
+
+    const numeroPessoas = inputPessoas.value.split(',').map(i => Number(i.trim()))[0]     // pega o primeiro número
+
+    const perCapita = renda / numeroPessoas
+
+    let desconto = 0
+    let mensagem = ''
+
     
+    if (perCapita < 660) {
+        desconto = total * 0.15
+        mensagem = 'Você tem 85% de desconto'
+    }
+    else if (perCapita > 660 && perCapita < 1500) {
+        desconto = total * 0.25
+        mensagem = 'Você tem 75% de desconto'
+    }
+    else if (perCapita > 1500 && perCapita < 2000) {
+        desconto = total * 0.35
+        mensagem = 'Você tem 65% de desconto'
+    }
+    else if (perCapita > 2000 && perCapita < 3000) {
+        desconto = total * 0.75
+        mensagem = 'Você tem 25% de desconto'
+    }
+    else {
+        desconto = total
+        mensagem = 'Você não tem direito a desconto'
+    }
+
+    // atualiza sidebar 
+    resultado.textContent = mensagem
+    precoFinal.textContent = `Preço final: R$ ${desconto.toFixed(2)}`
 })
